@@ -1,0 +1,41 @@
+//-------------------------19/7/2023-------------------------------------
+1:- Bucket
+    db.getCollection("demoData").aggregate([
+        {$bucket : {
+            groupBy : "$bedrooms",
+            boundaries : [1,2,4],
+            default : "Others",
+            output : {
+                count : {$sum : 1},
+                data : {
+                    $push : {
+                        bedrooms : "$bedrooms"
+                    }
+                }
+            }
+        }}
+    ])
+
+2:- $bucketAuto
+3:- $changeStream
+4:- $changeStreamSplitLargerEvents
+5:- $collStats
+6:- $count
+7:- $currentOp
+8:- $densify
+    db.getCollection("demoData").aggregate([
+        {$densify : {
+            field : "bedrooms",
+            range : {
+                step : 1,
+                bounds : [1,2]
+            }
+        }}
+    ])
+9:- documents : [<field1>,<field2>,.....<filedN>],
+10:- $facet -> done
+11:- $group -> done
+12:- $addFields -> done
+13:- $merge -> store the aggregation results into a another collection
+14:- $out -> done
+15:- $redact 
